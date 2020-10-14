@@ -81,8 +81,10 @@ symptoms = get_symptoms(b)
 logobj = {"name": name}
 logobj.update(symptoms)
 
-# TODO: Append to a logfile
-print(str(datetime.utcnow().replace(microsecond=0).isoformat()), json.dumps(logobj))
+from pathlib import Path
+path = Path(__file__).parent.joinpath("results_log.txt")
+with path.open("a") as f:
+    f.write(str(datetime.utcnow().replace(microsecond=0).isoformat()) + ' ' + json.dumps(logobj) + "\n")
 
 c = tk.Tk()
 give_feedback(c, symptoms)
